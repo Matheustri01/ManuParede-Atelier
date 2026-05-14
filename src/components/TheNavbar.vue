@@ -1,9 +1,18 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
 
-const scrolled = ref(false)
-const isOpen = ref(false)
-let closeTimer = null
+const route = useRoute()
+const scrolled  = ref(false)
+const isOpen    = ref(false)
+const navLight  = ref(!!route.meta.navLight)
+let closeTimer  = null
+
+// Delay matches the page-leave transition (0.25s) so the color
+// only changes after the old page has faded out.
+watch(() => route.meta.navLight, val => {
+  setTimeout(() => { navLight.value = !!val }, 260)
+})
 
 function handleScroll() {
   scrolled.value = window.scrollY > 60
@@ -38,7 +47,7 @@ const links = [
 
 <template>
   <!-- Top Bar -->
-  <header :class="['topbar', { 'topbar--scrolled': scrolled }]">
+  <header :class="['topbar', { 'topbar--scrolled': scrolled, 'topbar--light': navLight }]">
     <div class="topbar__inner">
       <button
         :class="['hamburger', { 'hamburger--open': isOpen }]"
@@ -59,13 +68,22 @@ const links = [
         <span class="label-caps topbar__logo-sub">Atelier</span>
       </RouterLink>
 
-      <a href="#" class="topbar__icon" aria-label="Instagram">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-          <circle cx="12" cy="12" r="4"/>
-          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-        </svg>
-      </a>
+      <div class="topbar__actions">
+        <a href="#" class="topbar__icon" aria-label="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <RouterLink to="/checkout" class="topbar__icon topbar__bag" aria-label="Sacola de compras">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+        </RouterLink>
+      </div>
     </div>
   </header>
 
@@ -152,11 +170,17 @@ const links = [
 }
 
 .topbar--scrolled {
-  background: rgba(245, 236, 215, 0.88);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom-color: var(--gold-leaf);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  border-bottom-color: rgba(201, 168, 76, 0.3);
 }
+
+/* Páginas com fundo claro: elementos em onyx */
+.topbar--light .hamburger__line           { background: var(--onyx); }
+.topbar--light .topbar__logo-name         { color: var(--onyx); }
+.topbar--light .topbar__icon              { color: var(--onyx); }
+.topbar--light .topbar__icon:hover        { color: var(--gold-leaf); }
 
 .topbar__inner {
   display: grid;
@@ -196,8 +220,10 @@ const links = [
 }
 
 .topbar--scrolled .hamburger__line {
-  background: var(--onyx);
+  background: var(--ivory);
 }
+
+.topbar--scrolled.topbar--light .hamburger__line { background: var(--onyx); }
 
 .hamburger--open .hamburger__line:nth-child(1) {
   transform: translateY(6px) rotate(45deg);
@@ -229,7 +255,8 @@ const links = [
   white-space: nowrap;
 }
 
-.topbar--scrolled .topbar__logo-name { color: var(--onyx); }
+.topbar--scrolled .topbar__logo-name              { color: var(--ivory); }
+.topbar--scrolled.topbar--light .topbar__logo-name { color: var(--onyx); }
 
 .topbar__logo-divider {
   display: block;
@@ -244,16 +271,23 @@ const links = [
   letter-spacing: 0.38em;
 }
 
-/* ===== Instagram icon ===== */
-.topbar__icon {
+/* ===== Right actions ===== */
+.topbar__actions {
   justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.topbar__icon {
   color: var(--ivory);
   display: flex;
   align-items: center;
   transition: color 0.3s ease;
 }
 
-.topbar--scrolled .topbar__icon { color: var(--onyx); }
+.topbar--scrolled .topbar__icon              { color: var(--ivory); }
+.topbar--scrolled.topbar--light .topbar__icon { color: var(--onyx); }
 .topbar__icon:hover { color: var(--gold-leaf); }
 
 /* ===== Overlay ===== */

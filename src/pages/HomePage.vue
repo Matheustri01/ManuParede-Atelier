@@ -9,8 +9,8 @@ import NewsletterSection from '../components/NewsletterSection.vue'
 <template>
   <main>
     <HeroSection />
-    <CategoriesSection />
     <ProductsSection />
+    <CategoriesSection />
     <AtelierSection />
     <NewsletterSection />
   </main>
