@@ -1,21 +1,27 @@
 <script setup>
-import { ref, watch, onMounted, onUnmounted } from 'vue'
+import { ref, watch, nextTick, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 
-const route = useRoute()
-const scrolled  = ref(false)
-const isOpen    = ref(false)
-const navLight  = ref(!!route.meta.navLight)
-let closeTimer  = null
+const route    = useRoute()
+const scrolled = ref(false)
+const navLight = ref(false) // false = ivory text, true = onyx text
+const isOpen   = ref(false)
+let closeTimer = null
 
-// Delay matches the page-leave transition (0.25s) so the color
-// only changes after the old page has faded out.
-watch(() => route.meta.navLight, val => {
-  setTimeout(() => { navLight.value = !!val }, 260)
-})
+const NAV_H = 72
+
+function checkNavColor() {
+  const els = document.querySelectorAll('[data-nav-dark]')
+  const overDark = Array.from(els).some(el => {
+    const { top, bottom } = el.getBoundingClientRect()
+    return top < NAV_H && bottom > 0
+  })
+  navLight.value = !overDark
+}
 
 function handleScroll() {
   scrolled.value = window.scrollY > 60
+  checkNavColor()
 }
 
 function openMenu() {
@@ -32,8 +38,21 @@ function closeImmediate() {
   isOpen.value = false
 }
 
-onMounted(() => window.addEventListener('scroll', handleScroll))
-onUnmounted(() => window.removeEventListener('scroll', handleScroll))
+onMounted(async () => {
+  window.addEventListener('scroll', handleScroll)
+  await nextTick()
+  checkNavColor()
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
+
+// After route change: wait for out-in leave (0.25s) + new page render, then recheck
+watch(() => route.path, async () => {
+  await new Promise(r => setTimeout(r, 320))
+  checkNavColor()
+})
 
 const links = [
   { num: '01', label: 'Coleção',    routeTo: '/colecoes' },
@@ -219,11 +238,8 @@ const links = [
     opacity 0.25s ease;
 }
 
-.topbar--scrolled .hamburger__line {
-  background: var(--ivory);
-}
-
-.topbar--scrolled.topbar--light .hamburger__line { background: var(--onyx); }
+.topbar--scrolled .hamburger__line { background: var(--ivory); }
+.topbar--light    .hamburger__line { background: var(--onyx); }
 
 .hamburger--open .hamburger__line:nth-child(1) {
   transform: translateY(6px) rotate(45deg);
@@ -255,8 +271,8 @@ const links = [
   white-space: nowrap;
 }
 
-.topbar--scrolled .topbar__logo-name              { color: var(--ivory); }
-.topbar--scrolled.topbar--light .topbar__logo-name { color: var(--onyx); }
+.topbar--scrolled .topbar__logo-name { color: var(--ivory); }
+.topbar--light    .topbar__logo-name { color: var(--onyx); }
 
 .topbar__logo-divider {
   display: block;
@@ -286,9 +302,9 @@ const links = [
   transition: color 0.3s ease;
 }
 
-.topbar--scrolled .topbar__icon              { color: var(--ivory); }
-.topbar--scrolled.topbar--light .topbar__icon { color: var(--onyx); }
-.topbar__icon:hover { color: var(--gold-leaf); }
+.topbar--scrolled .topbar__icon { color: var(--ivory); }
+.topbar--light    .topbar__icon { color: var(--onyx); }
+.topbar__icon:hover             { color: var(--gold-leaf); }
 
 /* ===== Overlay ===== */
 .side-overlay {

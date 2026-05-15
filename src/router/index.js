@@ -9,8 +9,8 @@ export default createRouter({
   routes: [
     { path: '/',         component: HomePage },
     { path: '/colecoes', component: CollectionsPage },
-    { path: '/vestidos', component: DressesPage,   meta: { navLight: true } },
-    { path: '/checkout', component: CheckoutPage,  meta: { navLight: true } },
+    { path: '/vestidos', component: DressesPage },
+    { path: '/checkout', component: CheckoutPage },
   ],
   scrollBehavior(to) {
     if (to.hash) return { el: to.hash, behavior: 'smooth' }

@@ -10,7 +10,7 @@ function handleSubmit() {
 </script>
 
 <template>
-  <section class="newsletter">
+  <section class="newsletter" data-nav-dark>
     <div class="container">
       <div class="newsletter__inner">
         <div class="newsletter__text">

@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <section class="hero">
+  <section class="hero" data-nav-dark>
     <div class="hero__image-wrap">
       <img
         src="https://picsum.photos/seed/haute-couture/1440/960"

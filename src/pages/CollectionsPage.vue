@@ -38,7 +38,7 @@ const filtered = computed(() =>
   <main>
 
     <!-- 1 · Page Hero -->
-    <section class="col-hero">
+    <section class="col-hero" data-nav-dark>
       <div class="col-hero__image-wrap">
         <img
           src="https://picsum.photos/seed/collections-hero-mp/1440/900"
@@ -147,7 +147,7 @@ const filtered = computed(() =>
     </section>
 
     <!-- 4 · Editorial Break -->
-    <section class="col-editorial">
+    <section class="col-editorial" data-nav-dark>
       <div class="col-editorial__bg-wrap">
         <img
           src="https://picsum.photos/seed/editorial-colecoes-mp/1440/600"
