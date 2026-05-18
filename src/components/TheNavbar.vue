@@ -55,12 +55,11 @@ watch(() => route.path, async () => {
 })
 
 const links = [
-  { num: '01', label: 'Coleção',    routeTo: '/colecoes' },
-  { num: '02', label: 'Vestidos',   routeTo: '/vestidos' },
-  { num: '03', label: 'Sob Medida', href: '/#sob-medida' },
-  { num: '04', label: 'Sobre',      href: '/#sobre' },
-  { num: '05', label: 'Contato',    href: '/#contato' },
-  { num: '06', label: 'Suporte',    href: '/#suporte' },
+  { num: '01', label: 'Coleção',  routeTo: '/colecoes' },
+  { num: '02', label: 'Vestidos', routeTo: '/vestidos' },
+  { num: '03', label: 'Sobre',    href: '/#sobre' },
+  { num: '04', label: 'Contato',  href: '/#contato' },
+  { num: '05', label: 'Suporte',  href: '/#suporte' },
 ]
 </script>
 
@@ -404,7 +403,6 @@ const links = [
 .side-drawer--open .side-drawer__item:nth-child(3) { transition-delay: 0.22s; }
 .side-drawer--open .side-drawer__item:nth-child(4) { transition-delay: 0.27s; }
 .side-drawer--open .side-drawer__item:nth-child(5) { transition-delay: 0.32s; }
-.side-drawer--open .side-drawer__item:nth-child(6) { transition-delay: 0.37s; }
 
 .side-drawer__link {
   display: flex;

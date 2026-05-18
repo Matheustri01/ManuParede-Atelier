@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+import { RouterLink } from 'vue-router'
+</script>
 
 <template>
   <section class="hero" data-nav-dark>
@@ -30,7 +32,7 @@
         </p>
 
         <div class="hero__ctas">
-          <a href="#colecao" class="btn-primary">Ver Coleção</a>
+          <RouterLink to="/colecoes" class="btn-primary">Ver Coleção</RouterLink>
           <a href="#sobre" class="btn-secondary">O Atelier</a>
         </div>
       </div>

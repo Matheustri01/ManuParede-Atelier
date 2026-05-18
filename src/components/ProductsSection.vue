@@ -1,4 +1,14 @@
 <script setup>
+import { RouterLink } from 'vue-router'
+
+function slugify(name) {
+  return name
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, '-')
+}
+
 const products = [
   {
     name: 'Vestido Íris',
@@ -45,7 +55,7 @@ const products = [
             <img :src="product.image" :alt="product.name" class="product-card__image" loading="lazy" />
             <span v-if="product.tag" class="product-card__tag label-caps">{{ product.tag }}</span>
             <div class="product-card__actions">
-              <a href="#" class="btn-primary product-card__btn">Ver Peça</a>
+              <RouterLink :to="`/peca/${slugify(product.name)}`" class="btn-primary product-card__btn">Ver Peça</RouterLink>
             </div>
           </div>
           <div class="product-card__info">
@@ -57,7 +67,7 @@ const products = [
       </div>
 
       <div class="products__footer">
-        <a href="#" class="btn-secondary btn-secondary--onyx">Ver Toda a Coleção</a>
+        <RouterLink to="/colecoes" class="btn-secondary btn-secondary--onyx">Ver Toda a Coleção</RouterLink>
       </div>
     </div>
   </section>

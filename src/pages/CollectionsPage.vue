@@ -2,6 +2,14 @@
 import { ref, computed } from 'vue'
 import NewsletterSection from '../components/NewsletterSection.vue'
 
+function slugify(name) {
+  return name
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, '-')
+}
+
 const filters = [
   { label: 'Todas', value: 'todas' },
   { label: 'Casamentos', value: 'Casamentos' },
@@ -133,7 +141,7 @@ const filtered = computed(() =>
               <img :src="product.image" :alt="product.name" class="product-card__image" loading="lazy" />
               <span v-if="product.tag" class="product-card__tag label-caps">{{ product.tag }}</span>
               <div class="product-card__actions">
-                <a href="#" class="btn-primary product-card__btn">Ver Peça</a>
+                <RouterLink :to="`/peca/${slugify(product.name)}`" class="btn-primary product-card__btn">Ver Peça</RouterLink>
               </div>
             </div>
             <div class="product-card__info">
