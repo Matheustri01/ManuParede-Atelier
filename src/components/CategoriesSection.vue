@@ -76,7 +76,7 @@ const categories = [
 
 .categories__eyebrow {
   color: var(--gold-leaf);
-  font-size: 13px;
+  font-size: 18px;
   letter-spacing: 0.28em;
   white-space: nowrap;
 }
@@ -178,7 +178,7 @@ const categories = [
   }
 
   .categories__eyebrow {
-    font-size: 11px;
+    font-size: 14px;
   }
 }
 </style>

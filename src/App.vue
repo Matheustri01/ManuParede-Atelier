@@ -1,6 +1,34 @@
 <script setup>
+import { onMounted, onUnmounted } from 'vue'
+import Lenis from 'lenis'
 import TheNavbar from './components/TheNavbar.vue'
 import TheFooter from './components/TheFooter.vue'
+
+let lenis
+let rafId
+
+onMounted(() => {
+  lenis = new Lenis({
+    duration: 0.35,
+    easing: t => 1 - Math.pow(1 - t, 3),
+    smoothWheel: true,
+    wheelMultiplier: 0.65,
+    touchMultiplier: 0.85,
+    overscroll: false,
+  })
+
+  function raf(time) {
+    lenis.raf(time)
+    rafId = requestAnimationFrame(raf)
+  }
+
+  rafId = requestAnimationFrame(raf)
+})
+
+onUnmounted(() => {
+  cancelAnimationFrame(rafId)
+  lenis?.destroy()
+})
 </script>
 
 <template>

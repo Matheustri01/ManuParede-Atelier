@@ -58,8 +58,8 @@ const links = [
   { num: '01', label: 'Coleção',  routeTo: '/colecoes' },
   { num: '02', label: 'Vestidos', routeTo: '/vestidos' },
   { num: '03', label: 'Sobre',    href: '/#sobre' },
-  { num: '04', label: 'Contato',  href: '/#contato' },
-  { num: '05', label: 'Suporte',  href: '/#suporte' },
+  { num: '04', label: 'Contato',  routeTo: '/contato' },
+  { num: '05', label: 'Suporte',  routeTo: '/suporte' },
 ]
 </script>
 
