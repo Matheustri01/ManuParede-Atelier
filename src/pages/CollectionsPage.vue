@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed } from 'vue'
-import NewsletterSection from '../components/NewsletterSection.vue'
 
 function slugify(name) {
   return name
@@ -174,10 +173,6 @@ const filtered = computed(() =>
         <a href="#contato" class="btn-secondary">Agendar Consulta</a>
       </div>
     </section>
-
-    <!-- 5 · Newsletter -->
-    <NewsletterSection />
-
   </main>
 </template>
 
@@ -188,6 +183,26 @@ const filtered = computed(() =>
   height: 65vh;
   min-height: 520px;
   overflow: hidden;
+}
+
+.col-hero::after,
+.col-stats::after,
+.col-grid-section::after {
+  content: '';
+  position: absolute;
+  right: var(--margin-desktop);
+  bottom: 0;
+  left: var(--margin-desktop);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(201, 168, 76, 0.72) 18%,
+    var(--gold-leaf) 50%,
+    rgba(201, 168, 76, 0.72) 82%,
+    transparent 100%
+  );
+  pointer-events: none;
 }
 
 .col-hero__image-wrap {
@@ -306,9 +321,8 @@ const filtered = computed(() =>
 
 /* ===== Stats Bar ===== */
 .col-stats {
+  position: relative;
   background: var(--champagne);
-  border-top: 0.5px solid var(--gold-leaf);
-  border-bottom: 0.5px solid rgba(201, 168, 76, 0.3);
 }
 
 .col-stats__inner {
@@ -349,6 +363,7 @@ const filtered = computed(() =>
 
 /* ===== Filter + Grid ===== */
 .col-grid-section {
+  position: relative;
   padding: var(--section-gap) 0;
   background: var(--surface);
 }
@@ -580,6 +595,13 @@ const filtered = computed(() =>
 }
 
 @media (max-width: 768px) {
+  .col-hero::after,
+  .col-stats::after,
+  .col-grid-section::after {
+    right: var(--margin-mobile);
+    left: var(--margin-mobile);
+  }
+
   .col-hero { height: 58vh; }
   .col-hero__scroll-hint { display: none; }
   .col-hero__text { gap: 14px; }

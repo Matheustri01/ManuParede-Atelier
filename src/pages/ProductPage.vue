@@ -318,9 +318,27 @@ watch(() => route.params.slug, () => {
 
 /* ===== Breadcrumb ===== */
 .pd-crumb {
+  position: relative;
   background: var(--ivory);
-  border-bottom: 0.5px solid var(--outline-variant);
   padding-top: 92px;
+}
+
+.pd-crumb::after {
+  content: '';
+  position: absolute;
+  right: var(--margin-desktop);
+  bottom: 0;
+  left: var(--margin-desktop);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(201, 168, 76, 0.72) 18%,
+    var(--gold-leaf) 50%,
+    rgba(201, 168, 76, 0.72) 82%,
+    transparent 100%
+  );
+  pointer-events: none;
 }
 
 .pd-crumb__inner {
@@ -773,6 +791,11 @@ watch(() => route.params.slug, () => {
 }
 
 @media (max-width: 768px) {
+  .pd-crumb::after {
+    right: var(--margin-mobile);
+    left: var(--margin-mobile);
+  }
+
   .pd-body {
     padding-top: 32px;
     padding-bottom: 80px;

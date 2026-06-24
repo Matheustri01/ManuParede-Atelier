@@ -411,6 +411,28 @@ const channels = [
   overflow: hidden;
 }
 
+.sp-hero::after,
+.sp-strip::after,
+.sp-cards::after,
+.sp-faq::after,
+.sp-policies::after {
+  content: '';
+  position: absolute;
+  right: var(--margin-desktop);
+  bottom: 0;
+  left: var(--margin-desktop);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(201, 168, 76, 0.72) 18%,
+    var(--gold-leaf) 50%,
+    rgba(201, 168, 76, 0.72) 82%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
 .sp-hero__image-wrap {
   position: absolute;
   inset: 0;
@@ -509,9 +531,8 @@ const channels = [
 
 /* ===== Channels Strip ===== */
 .sp-strip {
+  position: relative;
   background: var(--champagne);
-  border-top: 0.5px solid var(--gold-leaf);
-  border-bottom: 0.5px solid rgba(201, 168, 76, 0.3);
 }
 
 .sp-strip__inner {
@@ -567,6 +588,7 @@ const channels = [
 
 /* ===== Support Cards ===== */
 .sp-cards {
+  position: relative;
   padding: var(--section-gap) 0 0;
   background: var(--surface);
 }
@@ -656,6 +678,7 @@ const channels = [
 
 /* ===== FAQ ===== */
 .sp-faq {
+  position: relative;
   padding: 72px 0 var(--section-gap);
   background: var(--surface);
 }
@@ -873,7 +896,6 @@ const channels = [
 .sp-cta {
   padding: var(--section-gap) 0;
   background: var(--surface);
-  border-top: 0.5px solid var(--outline-variant);
 }
 
 .sp-cta__inner {
@@ -935,6 +957,15 @@ const channels = [
 }
 
 @media (max-width: 768px) {
+  .sp-hero::after,
+  .sp-strip::after,
+  .sp-cards::after,
+  .sp-faq::after,
+  .sp-policies::after {
+    right: var(--margin-mobile);
+    left: var(--margin-mobile);
+  }
+
   .sp-hero { height: 58vh; }
   .sp-hero__scroll-hint { display: none; }
 

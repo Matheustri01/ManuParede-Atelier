@@ -57,8 +57,16 @@ const categories = [
 
 <style scoped>
 .categories {
+  position: relative;
   padding: var(--section-gap) 0;
-  background: var(--ivory);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(201, 168, 76, 0.08) 0%,
+      rgba(245, 236, 215, 0.96) 18%,
+      var(--champagne) 50%,
+      rgba(241, 237, 231, 0.98) 100%
+    );
 }
 
 .categories__header {
@@ -82,7 +90,7 @@ const categories = [
 }
 
 .categories__title {
-  color: var(--on-surface-variant);
+  color: rgba(28, 28, 24, 0.72);
   font-size: 15px;
   font-family: 'Montserrat', sans-serif;
   font-weight: 300;
@@ -92,7 +100,7 @@ const categories = [
 .categories__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
+  gap: 6px;
 }
 
 /* Card */
@@ -170,11 +178,15 @@ const categories = [
 }
 
 @media (max-width: 900px) {
+  .categories {
+    padding: 88px 0;
+  }
+
   .categories__grid {
     grid-template-columns: 1fr;
     max-width: 420px;
     margin: 0 auto;
-    gap: 2px;
+    gap: 6px;
   }
 
   .categories__eyebrow {

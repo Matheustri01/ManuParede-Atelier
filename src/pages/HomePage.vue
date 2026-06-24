@@ -2,7 +2,6 @@
 import HeroSection from '../components/HeroSection.vue'
 import CategoriesSection from '../components/CategoriesSection.vue'
 import ProductsSection from '../components/ProductsSection.vue'
-import NewsletterSection from '../components/NewsletterSection.vue'
 </script>
 
 <template>
@@ -10,6 +9,5 @@ import NewsletterSection from '../components/NewsletterSection.vue'
     <HeroSection />
     <ProductsSection />
     <CategoriesSection />
-    <NewsletterSection />
   </main>
 </template>

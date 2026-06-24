@@ -75,8 +75,32 @@ const products = [
 
 <style scoped>
 .products {
+  position: relative;
   padding: var(--section-gap) 0;
-  background: var(--surface);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(250, 246, 240, 0.92) 0%,
+      var(--surface) 18%,
+      var(--surface) 100%
+    );
+}
+
+.products::after {
+  content: '';
+  position: absolute;
+  right: var(--margin-desktop);
+  bottom: 0;
+  left: var(--margin-desktop);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(201, 168, 76, 0.68) 18%,
+    var(--gold-leaf) 50%,
+    rgba(201, 168, 76, 0.68) 82%,
+    transparent 100%
+  );
 }
 
 .products__header {
@@ -189,6 +213,11 @@ const products = [
 }
 
 @media (max-width: 540px) {
+  .products::after {
+    right: var(--margin-mobile);
+    left: var(--margin-mobile);
+  }
+
   .products__grid {
     grid-template-columns: 1fr;
     max-width: 340px;

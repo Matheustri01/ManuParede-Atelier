@@ -39,7 +39,6 @@ import { RouterLink } from 'vue-router'
     </div>
 
     <div class="hero__scroll-hint">
-      <span class="hero__scroll-label label-caps">Rolar</span>
       <div class="hero__scroll-line"></div>
     </div>
   </section>
@@ -53,6 +52,24 @@ import { RouterLink } from 'vue-router'
   display: flex;
   align-items: center;
   overflow: hidden;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  right: var(--margin-desktop);
+  bottom: 0;
+  left: var(--margin-desktop);
+  z-index: 3;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(201, 168, 76, 0.78) 18%,
+    var(--gold-leaf) 50%,
+    rgba(201, 168, 76, 0.78) 82%,
+    transparent 100%
+  );
 }
 
 .hero__image-wrap {
@@ -139,12 +156,6 @@ import { RouterLink } from 'vue-router'
   gap: 12px;
 }
 
-.hero__scroll-label {
-  color: rgba(250, 246, 240, 0.4);
-  font-size: 9px;
-  letter-spacing: 0.28em;
-}
-
 .hero__scroll-line {
   width: 0.5px;
   height: 44px;
@@ -158,6 +169,11 @@ import { RouterLink } from 'vue-router'
 }
 
 @media (max-width: 768px) {
+  .hero::after {
+    right: var(--margin-mobile);
+    left: var(--margin-mobile);
+  }
+
   .hero__text {
     gap: 28px;
   }

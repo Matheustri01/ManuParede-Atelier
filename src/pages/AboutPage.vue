@@ -1,7 +1,3 @@
-<script setup>
-import NewsletterSection from '../components/NewsletterSection.vue'
-</script>
-
 <template>
   <main class="about-page">
     <section class="about-story" id="nossa-historia">
@@ -47,6 +43,8 @@ import NewsletterSection from '../components/NewsletterSection.vue'
         </div>
       </div>
     </section>
+
+    <div class="about-section-divider container" aria-hidden="true"></div>
 
     <section class="creative-process" id="processo-criativo" data-nav-dark>
       <div class="creative-process__inner container">
@@ -97,8 +95,6 @@ import NewsletterSection from '../components/NewsletterSection.vue'
         </div>
       </div>
     </section>
-
-    <NewsletterSection />
   </main>
 </template>
 
@@ -110,6 +106,18 @@ import NewsletterSection from '../components/NewsletterSection.vue'
 
 .about-story {
   padding: var(--section-gap) 0;
+}
+
+.about-section-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(201, 168, 76, 0.76) 18%,
+    var(--gold-leaf) 50%,
+    rgba(201, 168, 76, 0.76) 82%,
+    transparent 100%
+  );
 }
 
 .about-story__inner,
@@ -304,6 +312,11 @@ import NewsletterSection from '../components/NewsletterSection.vue'
   .about-story,
   .creative-process {
     padding: 88px 0;
+  }
+
+  .about-section-divider {
+    margin: 0 var(--margin-mobile);
+    padding: 0;
   }
 
   .about-story__stats,

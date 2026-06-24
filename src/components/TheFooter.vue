@@ -21,6 +21,8 @@ const footerLinks = {
 
 <template>
   <footer class="footer">
+    <div class="footer__section-divider" aria-hidden="true"></div>
+
     <div class="footer__top container">
       <div class="footer__brand">
         <div class="footer__logo">
@@ -89,8 +91,33 @@ const footerLinks = {
 
 <style scoped>
 .footer {
-  background: var(--onyx);
-  padding-top: 80px;
+  position: relative;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(241, 237, 231, 0) 0%,
+      rgba(250, 246, 240, 0.44) 34%,
+      rgba(250, 246, 240, 0.72)
+    );
+  backdrop-filter: blur(26px) saturate(1.18);
+  -webkit-backdrop-filter: blur(26px) saturate(1.18);
+  padding-top: 64px;
+}
+
+.footer__section-divider {
+  position: absolute;
+  top: 0;
+  left: var(--margin-desktop);
+  right: var(--margin-desktop);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(201, 168, 76, 0.76) 18%,
+    var(--gold-leaf) 50%,
+    rgba(201, 168, 76, 0.76) 82%,
+    transparent 100%
+  );
 }
 
 .footer__top {
@@ -118,7 +145,7 @@ const footerLinks = {
   font-size: 20px;
   font-weight: 400;
   letter-spacing: 0.12em;
-  color: var(--ivory);
+  color: var(--onyx);
 }
 
 .footer__logo-divider {
@@ -135,7 +162,7 @@ const footerLinks = {
 }
 
 .footer__tagline {
-  color: rgba(250, 246, 240, 0.38);
+  color: rgba(28, 28, 24, 0.58);
 }
 
 .footer__social {
@@ -145,7 +172,7 @@ const footerLinks = {
 }
 
 .footer__social-link {
-  color: rgba(250, 246, 240, 0.4);
+  color: rgba(28, 28, 24, 0.5);
   transition: color 0.3s ease;
   display: flex;
 }
@@ -176,7 +203,7 @@ const footerLinks = {
 }
 
 .footer__nav-link {
-  color: rgba(250, 246, 240, 0.42);
+  color: rgba(28, 28, 24, 0.58);
   font-size: 13px;
   font-weight: 300;
   letter-spacing: 0.01em;
@@ -184,7 +211,7 @@ const footerLinks = {
 }
 
 .footer__nav-link:hover {
-  color: var(--ivory);
+  color: var(--onyx);
 }
 
 /* Bottom */
@@ -197,7 +224,7 @@ const footerLinks = {
 }
 
 .footer__hairline {
-  background: rgba(201, 168, 76, 0.18);
+  background: rgba(201, 168, 76, 0.32);
 }
 
 .footer__bottom-row {
@@ -208,7 +235,7 @@ const footerLinks = {
 }
 
 .footer__copyright {
-  color: rgba(250, 246, 240, 0.25);
+  color: rgba(28, 28, 24, 0.38);
   font-size: 10px;
   letter-spacing: 0.14em;
 }
@@ -219,7 +246,7 @@ const footerLinks = {
 }
 
 .footer__legal-link {
-  color: rgba(250, 246, 240, 0.25);
+  color: rgba(28, 28, 24, 0.38);
   font-size: 10px;
   letter-spacing: 0.15em;
   transition: color 0.3s ease;
@@ -246,6 +273,11 @@ const footerLinks = {
 }
 
 @media (max-width: 540px) {
+  .footer__section-divider {
+    left: var(--margin-mobile);
+    right: var(--margin-mobile);
+  }
+
   .footer__nav {
     grid-template-columns: 1fr;
     gap: 32px;

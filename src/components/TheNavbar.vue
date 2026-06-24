@@ -57,7 +57,7 @@ watch(() => route.path, async () => {
 const links = [
   { num: '01', label: 'Coleção',  routeTo: '/colecoes' },
   { num: '02', label: 'Vestidos', routeTo: '/vestidos' },
-  { num: '03', label: 'Sobre',    href: '/#sobre' },
+  { num: '03', label: 'Sobre',    routeTo: '/sobre#nossa-historia' },
   { num: '04', label: 'Contato',  routeTo: '/contato' },
   { num: '05', label: 'Suporte',  routeTo: '/suporte' },
 ]
@@ -157,11 +157,6 @@ const links = [
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
             <circle cx="12" cy="12" r="4"/>
             <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-          </svg>
-        </a>
-        <a href="#" aria-label="Pinterest" class="side-drawer__social-link">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.236 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.181-.73 1.184-5.023 1.184-5.023s-.302-.605-.302-1.499c0-1.404.814-2.454 1.827-2.454.861 0 1.279.647 1.279 1.422 0 .867-.551 2.165-.836 3.371-.238.978.503 1.773 1.493 1.773 1.792 0 3.171-1.888 3.171-4.614 0-2.413-1.735-4.099-4.212-4.099-2.869 0-4.554 2.152-4.554 4.374 0 .866.332 1.794.748 2.301a.3.3 0 0 1 .069.287c-.076.316-.245 1.003-.278 1.142-.044.184-.146.223-.338.135-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.966-.527-2.292-1.148l-.623 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z"/>
           </svg>
         </a>
         <a href="#" aria-label="WhatsApp" class="side-drawer__social-link">

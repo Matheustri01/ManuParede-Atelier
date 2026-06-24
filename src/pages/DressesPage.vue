@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, computed } from 'vue'
+import { reactive, ref, computed, onBeforeUnmount, watch } from 'vue'
 
 /* ── Filtros disponíveis ─────────────────────────────────────── */
 const priceRanges = [
@@ -51,6 +51,10 @@ const filters = reactive({ prices: [], sizes: [], occasions: [], colors: [] })
 const openSections = reactive({ preco: true, tamanho: true, ocasiao: true, cores: true })
 const sortBy = ref('relevancia')
 const filterOpen = ref(false)
+const displayedDresses = ref(allDresses)
+const isGridFading = ref(false)
+let gridFadeTimer = null
+let gridRevealTimer = null
 
 /* ── Helpers ─────────────────────────────────────────────────── */
 function toggleFilter(type, value) {
@@ -115,6 +119,25 @@ const activeChips = computed(() => {
 const activeFilterCount = computed(() =>
   filters.prices.length + filters.sizes.length + filters.occasions.length + filters.colors.length
 )
+
+watch(filteredDresses, nextDresses => {
+  clearTimeout(gridFadeTimer)
+  clearTimeout(gridRevealTimer)
+
+  isGridFading.value = true
+
+  gridFadeTimer = setTimeout(() => {
+    displayedDresses.value = nextDresses
+    gridRevealTimer = setTimeout(() => {
+      isGridFading.value = false
+    }, 40)
+  }, 220)
+})
+
+onBeforeUnmount(() => {
+  clearTimeout(gridFadeTimer)
+  clearTimeout(gridRevealTimer)
+})
 </script>
 
 <template>
@@ -343,47 +366,49 @@ const activeFilterCount = computed(() =>
 
         <!-- ── Product Grid ─────────────────────────────────── -->
         <div class="dp__grid-wrap">
-          <TransitionGroup name="product" tag="div" class="dp__grid">
-            <article
-              v-for="dress in filteredDresses"
-              :key="dress.id"
-              class="product-card"
-            >
-              <div class="product-card__image-wrap">
-                <img :src="dress.image" :alt="dress.name" class="product-card__image" loading="lazy" />
-                <span v-if="dress.tag" class="product-card__tag label-caps">{{ dress.tag }}</span>
-                <div class="product-card__actions">
-                  <a href="#" class="btn-primary product-card__btn">Ver Peça</a>
-                </div>
-              </div>
-              <div class="product-card__info">
-                <span class="label-caps product-card__occasion">{{ dress.occasion }}</span>
-                <h3 class="headline-md product-card__name">{{ dress.name }}</h3>
-                <div class="product-card__meta">
-                  <span class="body-md product-card__price">{{ dress.priceLabel }}</span>
-                  <div class="product-card__sizes">
-                    <span
-                      v-for="s in dress.sizes.slice(0, 3)"
-                      :key="s"
-                      class="product-card__size"
-                    >{{ s }}</span>
-                    <span v-if="dress.sizes.length > 3" class="product-card__size product-card__size--more">
-                      +{{ dress.sizes.length - 3 }}
-                    </span>
+          <div :class="['dp__results', { 'dp__results--fading': isGridFading }]">
+            <div class="dp__grid">
+              <article
+                v-for="dress in displayedDresses"
+                :key="dress.id"
+                class="product-card"
+              >
+                <div class="product-card__image-wrap">
+                  <img :src="dress.image" :alt="dress.name" class="product-card__image" loading="lazy" />
+                  <span v-if="dress.tag" class="product-card__tag label-caps">{{ dress.tag }}</span>
+                  <div class="product-card__actions">
+                    <a href="#" class="btn-primary product-card__btn">Ver Peça</a>
                   </div>
                 </div>
-              </div>
-            </article>
-          </TransitionGroup>
+                <div class="product-card__info">
+                  <span class="label-caps product-card__occasion">{{ dress.occasion }}</span>
+                  <h3 class="headline-md product-card__name">{{ dress.name }}</h3>
+                  <div class="product-card__meta">
+                    <span class="body-md product-card__price">{{ dress.priceLabel }}</span>
+                    <div class="product-card__sizes">
+                      <span
+                        v-for="s in dress.sizes.slice(0, 3)"
+                        :key="s"
+                        class="product-card__size"
+                      >{{ s }}</span>
+                      <span v-if="dress.sizes.length > 3" class="product-card__size product-card__size--more">
+                        +{{ dress.sizes.length - 3 }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
 
-          <!-- Empty state -->
-          <div v-if="filteredDresses.length === 0" class="dp__empty">
-            <div class="hairline"></div>
-            <p class="headline-md dp__empty-title">Nenhuma peça encontrada</p>
-            <p class="body-md dp__empty-sub">Tente ajustar ou remover alguns filtros.</p>
-            <button class="btn-secondary btn-secondary--onyx dp__empty-btn" @click="clearFilters">
-              Limpar Filtros
-            </button>
+            <!-- Empty state -->
+            <div v-if="displayedDresses.length === 0" class="dp__empty">
+              <div class="hairline"></div>
+              <p class="headline-md dp__empty-title">Nenhuma peça encontrada</p>
+              <p class="body-md dp__empty-sub">Tente ajustar ou remover alguns filtros.</p>
+              <button class="btn-secondary btn-secondary--onyx dp__empty-btn" @click="clearFilters">
+                Limpar Filtros
+              </button>
+            </div>
           </div>
         </div>
 
@@ -401,10 +426,28 @@ const activeFilterCount = computed(() =>
 }
 
 .dp__header {
+  position: relative;
   background: var(--champagne);
   padding-top: 120px;
   padding-bottom: 0;
-  border-bottom: 0.5px solid rgba(201, 168, 76, 0.3);
+}
+
+.dp__header::after {
+  content: '';
+  position: absolute;
+  right: var(--margin-desktop);
+  bottom: 0;
+  left: var(--margin-desktop);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(201, 168, 76, 0.72) 18%,
+    var(--gold-leaf) 50%,
+    rgba(201, 168, 76, 0.72) 82%,
+    transparent 100%
+  );
+  pointer-events: none;
 }
 
 .dp__breadcrumb {
@@ -819,6 +862,18 @@ const activeFilterCount = computed(() =>
 /* ===== Product Grid ===== */
 .dp__grid-wrap { min-width: 0; }
 
+.dp__results {
+  opacity: 1;
+  transition: opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dp__results--fading {
+  opacity: 0;
+  pointer-events: none;
+  transition-duration: 0.28s;
+  transition-timing-function: cubic-bezier(0.64, 0, 0.78, 0);
+}
+
 .dp__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -910,13 +965,6 @@ const activeFilterCount = computed(() =>
   color: var(--gold-leaf);
 }
 
-/* Product transition */
-.product-enter-active { transition: opacity 0.38s ease, transform 0.38s ease; }
-.product-leave-active { transition: opacity 0.22s ease; position: absolute; }
-.product-enter-from   { opacity: 0; transform: translateY(14px); }
-.product-leave-to     { opacity: 0; }
-.product-move         { transition: transform 0.42s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-
 /* Empty state */
 .dp__empty {
   display: flex;
@@ -966,6 +1014,11 @@ const activeFilterCount = computed(() =>
 }
 
 @media (max-width: 600px) {
+  .dp__header::after {
+    right: var(--margin-mobile);
+    left: var(--margin-mobile);
+  }
+
   .dp__grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .dp__title { font-size: 40px; }
 
