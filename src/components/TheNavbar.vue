@@ -7,6 +7,7 @@ const scrolled = ref(false)
 const navLight = ref(false) // false = ivory text, true = onyx text
 const isOpen   = ref(false)
 let closeTimer = null
+let navTimer = null
 
 const NAV_H = 72
 
@@ -41,25 +42,26 @@ function closeImmediate() {
 onMounted(async () => {
   window.addEventListener('scroll', handleScroll)
   await nextTick()
-  checkNavColor()
+  handleScroll()
+  navTimer = window.setTimeout(handleScroll, 500)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.clearTimeout(navTimer)
 })
 
 // After route change: wait for out-in leave (0.25s) + new page render, then recheck
 watch(() => route.path, async () => {
   await new Promise(r => setTimeout(r, 320))
-  checkNavColor()
+  handleScroll()
 })
 
 const links = [
-  { num: '01', label: 'Coleção',  routeTo: '/colecoes' },
-  { num: '02', label: 'Vestidos', routeTo: '/vestidos' },
-  { num: '03', label: 'Sobre',    routeTo: '/sobre#nossa-historia' },
-  { num: '04', label: 'Contato',  routeTo: '/contato' },
-  { num: '05', label: 'Suporte',  routeTo: '/suporte' },
+  { label: 'Coleção',  routeTo: '/colecoes' },
+  { label: 'Vestidos', routeTo: '/vestidos' },
+  { label: 'Sobre',    routeTo: '/sobre#nossa-historia' },
+  { label: 'Contato',  routeTo: '/contato' },
 ]
 </script>
 
@@ -134,7 +136,6 @@ const links = [
             class="side-drawer__link"
             @click="closeImmediate"
           >
-            <span class="side-drawer__num">{{ link.num }}</span>
             <span class="side-drawer__label">{{ link.label }}</span>
           </RouterLink>
           <a
@@ -143,7 +144,6 @@ const links = [
             class="side-drawer__link"
             @click="closeImmediate"
           >
-            <span class="side-drawer__num">{{ link.num }}</span>
             <span class="side-drawer__label">{{ link.label }}</span>
           </a>
         </li>
@@ -178,15 +178,22 @@ const links = [
   left: 0;
   right: 0;
   z-index: 1000;
-  transition: background 0.5s ease, backdrop-filter 0.5s ease, border-color 0.5s ease;
+  transition: background-color 0.5s ease, backdrop-filter 0.5s ease, border-color 0.5s ease;
   border-bottom: 0.5px solid transparent;
 }
 
 .topbar--scrolled {
-  background: rgba(255, 255, 255, 0.08);
+  background-color: rgba(10, 10, 10, 0.18);
   backdrop-filter: blur(20px) saturate(1.3);
   -webkit-backdrop-filter: blur(20px) saturate(1.3);
   border-bottom-color: rgba(201, 168, 76, 0.3);
+}
+
+.topbar--scrolled.topbar--light {
+  /* Translúcido o bastante para o backdrop-filter continuar visível
+     também sobre as páginas de fundo claro. */
+  background-color: rgba(250, 246, 240, 0.72);
+  border-bottom-color: rgba(10, 10, 10, 0.08);
 }
 
 /* Páginas com fundo claro: elementos em onyx */
@@ -397,8 +404,6 @@ const links = [
 .side-drawer--open .side-drawer__item:nth-child(2) { transition-delay: 0.17s; }
 .side-drawer--open .side-drawer__item:nth-child(3) { transition-delay: 0.22s; }
 .side-drawer--open .side-drawer__item:nth-child(4) { transition-delay: 0.27s; }
-.side-drawer--open .side-drawer__item:nth-child(5) { transition-delay: 0.32s; }
-
 .side-drawer__link {
   display: flex;
   align-items: baseline;
@@ -408,21 +413,6 @@ const links = [
 }
 
 .side-drawer__link:hover { transform: translateX(8px); }
-
-.side-drawer__num {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  color: rgba(201, 168, 76, 0.45);
-  transition: color 0.3s ease;
-  flex-shrink: 0;
-}
-
-.side-drawer__link:hover .side-drawer__num,
-.side-drawer__link.router-link-active .side-drawer__num {
-  color: var(--gold-leaf);
-}
 
 .side-drawer__label {
   font-family: 'Playfair Display', serif;

@@ -1,5 +1,6 @@
 <script setup>
 import { reactive, ref, computed, onBeforeUnmount, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 /* ── Filtros disponíveis ─────────────────────────────────────── */
 const priceRanges = [
@@ -47,6 +48,7 @@ const allDresses = [
 ]
 
 /* ── Estado ──────────────────────────────────────────────────── */
+const route = useRoute()
 const filters = reactive({ prices: [], sizes: [], occasions: [], colors: [] })
 const openSections = reactive({ preco: true, tamanho: true, ocasiao: true, cores: true })
 const sortBy = ref('relevancia')
@@ -68,6 +70,13 @@ function clearFilters() {
   filters.sizes = []
   filters.occasions = []
   filters.colors = []
+}
+
+function applyCollectionFromRoute(collection) {
+  if (typeof collection !== 'string') return
+  if (!occasionOptions.includes(collection)) return
+
+  filters.occasions = [collection]
 }
 
 function matchesPrice(price, ranges) {
@@ -118,6 +127,15 @@ const activeChips = computed(() => {
 
 const activeFilterCount = computed(() =>
   filters.prices.length + filters.sizes.length + filters.occasions.length + filters.colors.length
+)
+
+watch(
+  () => route.query.colecao,
+  collection => {
+    applyCollectionFromRoute(collection)
+    displayedDresses.value = filteredDresses.value
+  },
+  { immediate: true }
 )
 
 watch(filteredDresses, nextDresses => {

@@ -17,7 +17,6 @@
           Cada peça é produzida individualmente — com tecidos cuidadosamente selecionados e acabamentos à mão que refletem décadas de tradição artesanal. Do esboço inicial à prova final, sua peça carrega a atenção integral da Manu.
         </p>
         <div class="atelier__ctas">
-          <a href="#contato" class="btn-primary">Agendar Consulta</a>
           <div class="atelier__stat-row">
             <div class="atelier__stat">
               <span class="headline-lg atelier__stat-num">8+</span>

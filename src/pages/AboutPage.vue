@@ -141,6 +141,11 @@
   color: var(--gold-leaf);
 }
 
+.about-story__eyebrow {
+  font-size: 16px;
+  letter-spacing: 0.18em;
+}
+
 .about-story__title,
 .creative-process__title {
   color: var(--onyx);

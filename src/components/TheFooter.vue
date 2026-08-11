@@ -6,9 +6,7 @@ const footerLinks = {
   ],
   'Atelier': [
     { label: 'Nossa História', to: '/sobre' },
-    { label: 'Processo Criativo', to: '/sobre#processo-criativo' },
-    { label: 'Encomendas' },
-    { label: 'Parcerias' },
+    { label: 'O Atelier', to: '/sobre' },
   ],
   'Atendimento': [
     { label: 'Contato' },

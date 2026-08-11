@@ -25,7 +25,7 @@ function handleSubmit() {
 const faq = [
   {
     q: 'Como funciona o processo de encomenda?',
-    a: 'Iniciamos com uma consulta presencial ou virtual para entender sua visão. A partir daí, criamos um esboço exclusivo, aprovamos junto com você e iniciamos a confecção artesanal.',
+    a: 'Iniciamos com uma conversa para entender sua visão. A partir daí, criamos um esboço exclusivo, aprovamos junto com você e iniciamos a confecção artesanal.',
   },
   {
     q: 'Qual é o prazo médio de produção?',
@@ -36,14 +36,52 @@ const faq = [
     a: 'Sim. Incluímos duas sessões de ajuste no valor da peça. Ajustes adicionais são orçados separadamente.',
   },
   {
-    q: 'É possível visitar o atelier sem agendamento?',
-    a: 'O atelier funciona exclusivamente com hora marcada para garantir atendimento dedicado a cada cliente.',
+    q: 'É possível visitar o atelier?',
+    a: 'Entre em contato pelo WhatsApp para verificar a disponibilidade de visita ao atelier.',
   },
 ]
 
 const openFaq = ref(null)
 function toggleFaq(i) {
   openFaq.value = openFaq.value === i ? null : i
+}
+
+const supportIssues = [
+  {
+    q: 'Meu pedido não chegou no prazo informado',
+    a: 'Envie o número do pedido e o nome usado na compra. Nossa equipe verifica o rastreamento, confirma a previsão atualizada e acompanha o caso até a entrega.',
+    action: 'Acompanhar pelo WhatsApp',
+    href: 'https://wa.me/5541999999999',
+  },
+  {
+    q: 'Recebi uma peça com avaria ou diferente do combinado',
+    a: 'Não utilize nem faça ajustes na peça antes da análise. Fotografe o detalhe encontrado e a embalagem recebida para que possamos orientar a troca, o reparo ou a correção adequada.',
+    action: 'Enviar fotos por e-mail',
+    href: 'mailto:atelier@manuparedes.com.br?subject=Suporte%20com%20minha%20pe%C3%A7a',
+  },
+  {
+    q: 'A peça precisa de um ajuste após a entrega',
+    a: 'Conte qual região precisa de ajuste e informe a data do evento. Avaliaremos a melhor solução e a disponibilidade do atelier, respeitando as condições acordadas para a sua peça.',
+    action: 'Solicitar avaliação',
+    href: 'https://wa.me/5541999999999',
+  },
+  {
+    q: 'Tive um problema com cobrança ou confirmação de pagamento',
+    a: 'Envie o comprovante e os dados usados no pedido. Nunca compartilhe senha ou dados completos do cartão; precisamos apenas das informações do pedido e do comprovante da transação.',
+    action: 'Falar com o atendimento',
+    href: 'mailto:atelier@manuparedes.com.br?subject=Suporte%20de%20pagamento',
+  },
+  {
+    q: 'Meu evento está próximo e preciso de ajuda imediata',
+    a: 'Fale conosco pelo WhatsApp informando o número do pedido e a data do evento logo na primeira mensagem. Casos com data próxima recebem triagem prioritária durante o horário de atendimento.',
+    action: 'Acionar suporte prioritário',
+    href: 'https://wa.me/5541999999999',
+  },
+]
+
+const openSupport = ref(null)
+function toggleSupport(i) {
+  openSupport.value = openSupport.value === i ? null : i
 }
 </script>
 
@@ -143,58 +181,9 @@ function toggleFaq(i) {
       </div>
     </div>
 
-    <!-- 3 · Main Content: Info + Form -->
+    <!-- 3 · Contact Form -->
     <section class="ct-main">
       <div class="container ct-main__inner">
-
-        <!-- Left: Info -->
-        <div class="ct-info">
-          <div class="ct-info__top">
-            <span class="label-caps ct-info__eyebrow">Consulta Exclusiva</span>
-            <div class="hairline"></div>
-            <h2 class="headline-lg ct-info__title">
-              Uma experiência<br>
-              <em>sob medida</em>
-            </h2>
-            <p class="body-lg ct-info__body">
-              No Atelier Manu Paredes, cada consulta é um encontro dedicado para entender
-              quem você é e o que deseja sentir no dia mais especial. Não criamos vestidos —
-              criamos memórias.
-            </p>
-          </div>
-
-          <div class="ct-info__details">
-            <div class="ct-info__detail">
-              <span class="label-caps ct-info__detail-label">Endereço</span>
-              <p class="body-md ct-info__detail-text">
-                Rua das Flores, 340 — Batel<br>
-                Curitiba — PR, 80420-250
-              </p>
-            </div>
-            <div class="ct-info__detail">
-              <span class="label-caps ct-info__detail-label">Atendimento</span>
-              <p class="body-md ct-info__detail-text">
-                Segunda a Sexta — 9h às 18h<br>
-                Sábados com agendamento prévio
-              </p>
-            </div>
-            <div class="ct-info__detail">
-              <span class="label-caps ct-info__detail-label">Redes Sociais</span>
-              <div class="ct-info__social">
-                <a href="#" class="ct-info__social-link" aria-label="Instagram">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                    <circle cx="12" cy="12" r="4"/>
-                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-                  </svg>
-                  @manuparedes.atelier
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right: Form -->
         <div class="ct-form-wrap">
           <Transition name="form-fade" mode="out-in">
             <!-- Success State -->
@@ -207,7 +196,7 @@ function toggleFaq(i) {
               <span class="label-caps ct-success__eyebrow">Mensagem enviada</span>
               <h3 class="headline-md ct-success__title">Obrigada pelo contato</h3>
               <p class="body-md ct-success__body">
-                Retornaremos em até 24 horas para agendar sua consulta exclusiva.
+                Retornaremos em até 24 horas pelo canal informado.
               </p>
               <button class="btn-primary ct-success__btn" @click="submitted = false">
                 Nova mensagem
@@ -217,7 +206,7 @@ function toggleFaq(i) {
             <!-- Form -->
             <form v-else class="ct-form" @submit.prevent="handleSubmit" novalidate>
               <div class="ct-form__header">
-                <span class="label-caps ct-form__eyebrow">Agendar Consulta</span>
+                <span class="label-caps ct-form__eyebrow">Enviar Mensagem</span>
                 <div class="hairline"></div>
                 <h2 class="headline-md ct-form__title">Fale conosco</h2>
               </div>
@@ -314,29 +303,7 @@ function toggleFaq(i) {
       </div>
     </section>
 
-    <!-- 4 · Editorial Break -->
-    <section class="ct-editorial" data-nav-dark>
-      <div class="ct-editorial__bg-wrap">
-        <img
-          src="https://picsum.photos/seed/contact-editorial-manu/1440/600"
-          alt=""
-          aria-hidden="true"
-          class="ct-editorial__bg"
-        />
-        <div class="ct-editorial__overlay"></div>
-      </div>
-      <div class="ct-editorial__inner container">
-        <span class="label-caps ct-editorial__eyebrow">Nossa Filosofia</span>
-        <div class="hairline"></div>
-        <blockquote class="ct-editorial__quote">
-          "A beleza mais rara é aquela que nasce de dentro para fora —
-          e nós apenas damos a ela uma forma."
-        </blockquote>
-        <span class="body-md ct-editorial__author">— Manu Paredes</span>
-      </div>
-    </section>
-
-    <!-- 5 · FAQ -->
+    <!-- 4 · FAQ -->
     <section class="ct-faq">
       <div class="container ct-faq__inner">
         <div class="ct-faq__header">
@@ -387,6 +354,70 @@ function toggleFaq(i) {
       </div>
     </section>
 
+    <!-- 5 · Support -->
+    <section class="ct-support" data-nav-dark>
+      <div class="container ct-support__inner">
+        <div class="ct-support__header">
+          <span class="label-caps ct-support__eyebrow">Suporte</span>
+          <div class="hairline"></div>
+          <h2 class="display-lg ct-support__title">
+            Algo não saiu<br>
+            <em>como esperado?</em>
+          </h2>
+        </div>
+
+        <div class="ct-support__content">
+          <div class="ct-support__list">
+            <div
+              v-for="(item, i) in supportIssues"
+              :key="item.q"
+              class="ct-support__item"
+            >
+              <button
+                class="ct-support__question"
+                :aria-expanded="openSupport === i"
+                @click="toggleSupport(i)"
+              >
+                <span class="ct-support__question-copy">
+                  <span class="body-lg ct-support__question-text">{{ item.q }}</span>
+                </span>
+                <svg
+                  class="ct-support__icon"
+                  :class="{ 'ct-support__icon--open': openSupport === i }"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+              </button>
+              <Transition name="faq">
+                <div v-if="openSupport === i" class="ct-support__answer">
+                  <p class="body-lg ct-support__answer-text">{{ item.a }}</p>
+                  <a
+                    :href="item.href"
+                    class="ct-support__action"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    {{ item.action }}
+                    <span aria-hidden="true">→</span>
+                  </a>
+                </div>
+              </Transition>
+            </div>
+          </div>
+
+          <p class="body-md ct-support__note">
+            Atendimento de segunda a sexta, das 9h às 18h. Mensagens recebidas fora desse horário serão respondidas no próximo período útil.
+          </p>
+        </div>
+      </div>
+    </section>
+
   </main>
 </template>
 
@@ -401,8 +432,7 @@ function toggleFaq(i) {
 
 .ct-hero::after,
 .ct-strip::after,
-.ct-main::after,
-.ct-editorial::after {
+.ct-main::after {
   content: '';
   position: absolute;
   right: var(--margin-desktop);
@@ -586,93 +616,13 @@ function toggleFaq(i) {
 }
 
 .ct-main__inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 100px;
-  align-items: start;
+  max-width: 820px;
 }
 
-/* Info Column */
-.ct-info {
-  display: flex;
-  flex-direction: column;
-  gap: 56px;
-  position: sticky;
-  top: 120px;
-}
-
-.ct-info__top {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.ct-info__eyebrow { color: var(--gold-leaf); }
-
-.ct-info__title {
-  color: var(--onyx);
-}
-.ct-info__title em {
-  font-style: italic;
-  color: var(--on-surface-variant);
-}
-
-.ct-info__body {
-  color: var(--on-surface-variant);
-  max-width: 400px;
-}
-
-.ct-info__details {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-}
-
-.ct-info__detail {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-bottom: 28px;
-  border-bottom: 0.5px solid var(--outline-variant);
-}
-.ct-info__detail:last-child { border-bottom: none; padding-bottom: 0; }
-
-.ct-info__detail-label {
-  color: var(--gold-leaf);
-  font-size: 10px;
-  letter-spacing: 0.2em;
-}
-
-.ct-info__detail-text {
-  color: var(--on-surface-variant);
-  line-height: 1.7;
-}
-
-.ct-info__social {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.ct-info__social-link {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--on-surface-variant);
-  font-family: 'Montserrat', sans-serif;
-  font-size: 13px;
-  font-weight: 300;
-  letter-spacing: 0.01em;
-  transition: color 0.3s ease;
-}
-.ct-info__social-link:hover { color: var(--gold-leaf); }
-.ct-info__social-link svg { flex-shrink: 0; }
-
-/* Form Column */
 .ct-form-wrap {
   background: var(--ivory);
   border: 0.5px solid var(--outline-variant);
-  padding: 52px 48px;
+  padding: 64px 72px;
 }
 
 .ct-form {
@@ -854,60 +804,6 @@ function toggleFaq(i) {
 .form-fade-enter-from   { opacity: 0; transform: translateY(12px); }
 .form-fade-leave-to     { opacity: 0; }
 
-/* ===== Editorial Break ===== */
-.ct-editorial {
-  position: relative;
-  overflow: hidden;
-}
-
-.ct-editorial__bg-wrap {
-  position: absolute;
-  inset: 0;
-}
-
-.ct-editorial__bg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.26) contrast(1.12) sepia(0.2);
-}
-
-.ct-editorial__overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(10, 10, 10, 0.65);
-}
-
-.ct-editorial__inner {
-  position: relative;
-  z-index: 2;
-  padding-top: 100px;
-  padding-bottom: 100px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  max-width: 700px;
-}
-
-.ct-editorial__eyebrow { color: var(--gold-leaf); }
-
-.ct-editorial__quote {
-  font-family: 'Playfair Display', serif;
-  font-size: 28px;
-  font-weight: 400;
-  font-style: italic;
-  line-height: 1.5;
-  letter-spacing: 0.01em;
-  color: var(--ivory);
-  quotes: none;
-}
-
-.ct-editorial__author {
-  color: rgba(250, 246, 240, 0.45);
-  font-size: 13px;
-  letter-spacing: 0.06em;
-}
-
 /* ===== FAQ ===== */
 .ct-faq {
   padding: var(--section-gap) 0;
@@ -1002,21 +898,138 @@ function toggleFaq(i) {
   font-size: 14px;
 }
 
+/* ===== Support ===== */
+.ct-support {
+  position: relative;
+  padding: var(--section-gap) 0;
+  background: var(--onyx);
+}
+
+.ct-support__inner {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 100px;
+  align-items: start;
+}
+
+.ct-support__header {
+  position: sticky;
+  top: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ct-support__eyebrow { color: var(--gold-leaf); }
+
+.ct-support__title { color: var(--ivory); }
+
+.ct-support__title em {
+  color: var(--champagne);
+  font-style: italic;
+}
+
+.ct-support__content,
+.ct-support__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.ct-support__item {
+  border-bottom: 0.5px solid rgba(201, 168, 76, 0.24);
+}
+
+.ct-support__item:first-child {
+  border-top: 0.5px solid rgba(201, 168, 76, 0.24);
+}
+
+.ct-support__question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.ct-support__question-copy {
+  display: block;
+}
+
+.ct-support__question-text {
+  color: rgba(250, 246, 240, 0.82);
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  line-height: 1.45;
+  transition: color 0.3s ease;
+}
+
+.ct-support__question:hover .ct-support__question-text,
+.ct-support__question[aria-expanded='true'] .ct-support__question-text {
+  color: var(--ivory);
+}
+
+.ct-support__icon {
+  flex-shrink: 0;
+  color: var(--gold-leaf);
+  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.ct-support__icon--open { transform: rotate(180deg); }
+
+.ct-support__answer {
+  overflow: hidden;
+}
+
+.ct-support__answer-text {
+  max-width: 580px;
+  padding-bottom: 20px;
+  color: rgba(250, 246, 240, 0.5);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.ct-support__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+  color: var(--champagne);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: color 0.3s ease, gap 0.3s ease;
+}
+
+.ct-support__action:hover {
+  color: var(--gold-leaf);
+  gap: 18px;
+}
+
+.ct-support__note {
+  margin-top: 36px;
+  max-width: 590px;
+  color: rgba(250, 246, 240, 0.32);
+  font-size: 11px;
+  line-height: 1.8;
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 1100px) {
-  .ct-main__inner {
-    grid-template-columns: 1fr;
-    gap: 64px;
-  }
-
-  .ct-info { position: static; }
-
-  .ct-faq__inner {
+  .ct-faq__inner,
+  .ct-support__inner {
     grid-template-columns: 1fr;
     gap: 48px;
   }
 
-  .ct-faq__header { position: static; }
+  .ct-faq__header,
+  .ct-support__header { position: static; }
 
   .ct-faq__cta { grid-column: 1; }
 }
@@ -1024,8 +1037,7 @@ function toggleFaq(i) {
 @media (max-width: 768px) {
   .ct-hero::after,
   .ct-strip::after,
-  .ct-main::after,
-  .ct-editorial::after {
+  .ct-main::after {
     right: var(--margin-mobile);
     left: var(--margin-mobile);
   }
@@ -1052,10 +1064,8 @@ function toggleFaq(i) {
 
   .ct-form__row { grid-template-columns: 1fr; }
 
-  .ct-editorial__quote { font-size: 22px; }
-  .ct-editorial__inner { padding-top: 72px; padding-bottom: 72px; }
-
   .ct-faq__cta { flex-direction: column; align-items: flex-start; gap: 20px; }
+
 }
 
 @media (max-width: 540px) {

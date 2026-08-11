@@ -64,7 +64,7 @@ function handleSubmit() {
           <h2 class="headline-lg ck__success-title">Obrigada, {{ form.nome.split(' ')[0] }}.</h2>
           <p class="body-lg ck__success-body">
             Entraremos em contato pelo e-mail <strong>{{ form.email }}</strong> para confirmar
-            os detalhes e agendar sua prova.
+            os detalhes da sua prova.
           </p>
           <RouterLink to="/" class="btn-secondary btn-secondary--onyx">Voltar ao Início</RouterLink>
         </div>
@@ -104,7 +104,7 @@ function handleSubmit() {
             <!-- Note -->
             <p class="body-md ck__note">
               Todas as peças são feitas à mão sob encomenda. Após a confirmação do pedido,
-              nossa equipe entrará em contato para agendar sua prova.
+              nossa equipe entrará em contato para combinar sua prova.
             </p>
           </div>
 
